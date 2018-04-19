@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>VueJS</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="vue.js"></script>
+    <style>
+        .demo {
+            width: 100px;
+            height: 50px;
+            background-color: gray;
+            display: inline-block;
+            margin: 10px;
+        }
+        .txt {
+            margin: 0px;
+        }
+        .red {
+            background-color: red;
+        }
+        .blue {
+            background-color: blue;
+        }
+        .green {
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <p>one way binding?</p>
+        <p><code>changeName()</code> executed for every input change event</p>
+        <input type="text" v-on:input="changeName">
+        <p>{{ nameOne }}</p>
+        <p>two way binding</p>
+        <input type="text" v-model="nameTwo">
+        <p>{{ nameTwo }}</p>
+        <p>==================</p>
+        <p>event by method vs computed | watch</p>
+        <button v-on:click="counter++">Increase counter</button>
+        <button v-on:click="counter--">Decrease counter</button>
+        <button v-on:click="secondCounter++">Increase second counter</button>
+        <p>Counter: {{ counter }} | {{ secondCounter }}</p>
+        <p>Result: {{ result() }} <code>(result())</code> | {{ output }} <code>(computed)</code></p>
+        <p>
+            <code>result()</code>, being a method, executed for every event or something
+            <ul>
+                <li>why <code>changeName()</code> only for input event but <code>result()</code> every event?</li>
+            </ul>
+        </p>
+        <p>
+            <code>computed</code> excuted only if <code>counter</code> changed
+            <ul>
+                <li><p>doesn't care <code>secondCounter</code></p></li>
+            </ul>
+        </p>
+        <p>can define <code>watch</code> for executing asynchronous action</p>
+        <p>==================</p>
+        <p>shorthand</p>
+        <button @click="toggleLink">Click to change link</button>
+        <a :href="lnk">{{ lnk }}</a>
+        <p><code>v-on: to @</code> and <code>v-bind:href to :href</code></p>
+        <p>==================</p>
+        <p>dynamic styling</p>
+        <ul>
+            <li><p>div 1 - by adding class with javascript object eg) <code>:class="{red: attachRed}"</code></p></li>
+            <li><p>div 2 - by adding class with <code>computed</code></p></li>
+            <li><p>div 3</p>
+                <ul>
+                    <li>by name, not just a single value but an object eg <code>[color, {red: attachRed}]</code></li>
+                    <li>as soon as input value changed to be undefined class (red, green, blue), color back to gray</li>
+                </ul>
+            </li>
+            <li><p>div 4</p>
+                <ul>
+                    <li>without CSS eg <code>:style="{backgroundColor: color}"</code></li>
+                    <li>not as reactive as div 3</li>
+                </ul>
+            </li>
+            <li><p>div 5 - by adding style with <code>computed</code></p></li>
+            <li><p>HOW easy it'll be to create a progress bar???</p></li>
+        </ul>
+        <input type="text" v-model="color">
+        <input type="text" v-model="width">
+        <br>
+        <div class="demo" @click="toggleDiv1 = !toggleDiv1" :class="{red: toggleDiv1, green: !toggleDiv1}">
+            <p style="text-align: center">{{ toggleDiv1 }}</p>
+        </div>
+        <div class="demo" @click="toggleDiv2 = !toggleDiv2" :class="toggleDiv">
+            <p style="text-align: center">{{ toggleDiv2 }}</p>
+        </div>
+        <div class="demo" :class="color">
+            <p style="text-align: center">{{ color == '' ? 'none' : color }}</p>
+        </div>
+        <div class="demo" :style="{backgroundColor: color}">
+                <p style="text-align: center">{{ color == '' ? 'none' : color }}</p>
+        </div>
+        <div class="demo" :style="[divStyle, {height: width + 'px'}]">
+                <p style="text-align: center">{{ color == '' ? 'none' : color }}</p>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+        data: {
+            nameOne: '',
+            nameTwo: 'Bernie',
+            counter: 0,
+            secondCounter: 0,
+            lnk: 'http://google.com',
+            toggleDiv1: false,
+            toggleDiv2: false,
+            color: 'green',
+            width: 100
+        },
+        computed: {
+            output: function() {
+                console.log('computed');
+                return this.counter > 5 ? '> 5' : '< 5';
+            },
+            toggleDiv: function() {
+                return {
+                    red: this.toggleDiv2,
+                    green: !this.toggleDiv2
+                }
+            },
+            divStyle: function() {
+                return {
+                    backgroundColor: this.color,
+                    width: this.width + 'px'
+                }
+            }
+        },
+        watch: {
+            // asynchronous action
+            counter: function(value) {
+                var vm = this;
+                setTimeout(function() {
+                    vm.counter = 0;
+                }, 5000)
+            }
+        },
+        methods: {
+            changeName: function(event) {
+                console.log('change name');
+                this.nameOne = event.target.value;
+            },
+            result: function() {
+                console.log('result');
+                return this.counter > 5 ? '> 5' : '< 5';
+            },
+            toggleLink: function() {
+                this.lnk = this.lnk == 'http://google.com' ? 'http://apple.com' : 'http://google.com'
+            }
+        }
+        });
+    </script>
+
+</body>
+</html>
