@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>VueJS</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <h1 v-once>{{ title }}</h1> <!-- w/ v-once no-rerendering -->
+        <input type="text" v-on:input="changeTitle">
+        <p>{{ title }}</p> <!-- w/o v-once re-rendering -->
+        <!--can't use {{}} in any html attributes href="{{ link }}" doesn't work
+            works only in text, use v-bind:attr-name without {{ }}
+        -->
+        <!-- w/o v-once re-rendering -->
+        <p>{{ sayHello() }} - <a v-bind:href="link">Google</a></p>
+        <br>
+        <p v-html="finishedLink"></p>
+        <br>
+        <!-- click is an event, any DOM event accepted -->
+        <p>Counter value is {{ counter }}.</p>
+        <p>Counter value - 1 is {{ counter - 1 }}.</p>
+        <p>Counter value is smaller than 3? {{ counter < 3 ? 'yes' : 'no' }}</p>
+        <button v-on:click="increase">Click me</button>
+        <button v-on:click="counter++">Click me</button>
+        <button v-on:click="increaseStep(2)">Click me</button>
+        <button v-on:click="increaseStepNEvent(2, $event)">Click me</button>        
+        <p v-on:mousemove="updateCoordinates">
+            Coordinates: {{ x }} / {{ y }}
+            - <span v-on:mousemove="dummy">by custom event.stopPropagation()</span>
+            - <span v-on:mousemove.stop="">by built-in event modifier</span>
+            <!--https://vuejs.org/v2/guide/events.html#Event-Modifiers -->
+            <!--modifiers can be chained -->
+        </p>
+        <br>
+        <input type="text" v-on:keyup.esc="alertMe" value="esc">
+        <input type="text" v-on:keyup.enter="alertMe" value="enter">
+        <!--https://vuejs.org/v2/guide/events.html#Key-Modifiers -->
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+        data: {
+            title: 'Hello World!!',
+            link: 'http://google.com',
+            finishedLink: '<a href="http://google.com">Google Raw</a>',
+            counter: 0,
+            x: 0,
+            y: 0
+        },
+        methods: {
+            changeTitle: function(event) {
+                this.title = event.target.value;
+            },
+            sayHello: function() {
+                this.title = 'Hi!'
+                return this.title + ' again';
+            },
+            increase: function() {
+                this.counter++;
+            },
+            increaseStep: function(step) {
+                this.counter += step;
+            },
+            increaseStepNEvent: function(step, event) {
+                this.counter += step;
+            },
+            updateCoordinates: function(event) {
+                this.x = event.clientX;
+                this.y = event.clientY;
+            },
+            dummy: function(event) {
+                event.stopPropagation();
+            },
+            alertMe: function() {
+                alert('Alert!')
+            }
+        }
+        });   
+    </script>
+
+</body>
+</html>

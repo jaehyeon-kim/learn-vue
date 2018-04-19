@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>VueJS</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <p>intro</p>
+        <input type="text" v-on:input="changeName">
+        <p>{{ name }}</p>
+        <br>
+        <p>two way binding</p>
+        <input type="text" v-model="name">
+        <p>{{ name }}</p>
+        <br>
+        <button v-on:click="counter++">Increase</button>
+        <button v-on:click="counter--">Decrease</button>
+        <button v-on:click="secondCounter++">Increase Second</button>
+        <p>Counter: {{ counter }} | {{ secondCounter }}</p>
+        <p>Result: {{ result() }} | {{ output }} </p>
+        <!--method vs computed - output doesn't care secondCounter -->
+        <!--compare to defining functions that update result as data-->
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+        data: {
+            name: 'Bernie',
+            counter: 0,
+            secondCounter: 0
+        },
+        computed: {
+            output: function() {
+                console.log('computed');
+                return this.counter > 5 ? '> 5' : '< 5';
+            }
+        },
+        watch: {
+            // asynchronous action
+            counter: function(value) {
+                var vm = this;
+                setTimeout(function() {
+                    vm.counter = 0;
+                }, 2000)
+            }
+        },
+        methods: {
+            changeName: function(event) {
+                this.name = event.target.value;
+            },
+            result: function() {
+                console.log('method');
+                return this.counter > 5 ? '> 5' : '< 5';
+            }
+        }
+        });
+    </script>
+
+</body>
+</html>
