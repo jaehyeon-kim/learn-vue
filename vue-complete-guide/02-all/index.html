@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Learn Vue.js</title>
+    <link rel="stylesheet" media="screen" href="style.css" />
+    <script src="vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <p v-once>{{ title }} - no re-rendering with <code>v-once</code></p>
+        <p>{{ changeTitle() }} - re-rendering without <code>v-once</code></p>
+        <p><code>changeTitle()</code> executed for every change of event or something</p>
+        <p>==================</p>
+        <p>one-way binding?</p>
+        <input type="text" v-on:input="changeInput">
+        <p>input - {{ input }}</p>
+        <p>==================</p>
+        <p>cannot use <code>{{}}</code> for any html attributes eg) <code>href="{{ link }}" doesn't work</code></p>
+        <p>use <code>v-bind:href="link"</code> instead - note no <code>{{}}</code></p>
+        <p><a v-bind:href="link">Link by <code>v-bind</code></a></p>
+        <p v-html="linkHtml"></p>
+        <p>==================</p>
+        <button v-on:click="increase">Increase 1 by method</button>
+        <button v-on:click="count++">Increase 1 by expr</button>
+        <button v-on:click="increaseArg(2)">Increase by arg</button>
+        <button v-on:click="increaseInput">Increase by input</button>
+        <!-- <button v-on:click="increaseEvt($event)">Increase {{ step }}</button> -->
+        <br><br>
+        <input type="text" v-on:input="changeStep" value=1>
+        <p>increase count by {{ step }}</p>
+        <p>count value - {{ count }}</p>
+        <p>==================</p>
+        <p>event modifier</p>
+        <p v-on:mousemove="updateCoords">
+            Coordinates: {{ x }} / {{ y }}
+            <br><span v-on:mousemove="sp">event stop by custom function</span>
+            <br><span v-on:mousemove.stop>event stop by <a v-bind:href="emLink">event modifier</a></span>
+        </p>
+        <p><a v-bind:href="kmLink">key modifier</a></p>
+        <input type="text" v-on:keyup.enter="alertMe" value = "enter and alert">
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                title: 'Hello World!',
+                input: 'input',
+                link: 'http://google.com',
+                linkHtml: '<a href="http://google.com">Link by v-html</a>',
+                count: 0,
+                step: 1,
+                x: 0,
+                y: 0,
+                emLink: 'https://vuejs.org/v2/guide/events.html#Event-Modifiers',
+                kmLink: 'https://vuejs.org/v2/guide/events.html#Key-Modifiers'
+            },
+            methods: {
+                changeTitle: function() {
+                    console.log('say hello');
+                    this.title = 'Hi!!';
+                    return this.title
+                },
+                changeInput: function(event) {
+                    this.input = event.target.value;
+                },
+                changeStep: function(event) {
+                    this.step = parseInt(event.target.value);
+                },
+                increase: function() {
+                    console.log('increase');
+                    this.count++;
+                },
+                increaseArg: function(arg) {
+                    console.log('increaseArg');
+                    this.count += arg;
+                },
+                increaseEvt: function(event) {
+                    console.log('increaseEvt');
+                    this.count += event.target.value;
+                },
+                increaseInput: function() {
+                    this.count += this.step
+                },
+                updateCoords: function(event) {
+                    console.log('update coordinates');
+                    this.x = event.clientX;
+                    this.y = event.clientY;
+                },
+                sp: function(event) {
+                    console.log('event stop');
+                    event.stopPropagation();
+                },
+                alertMe: function() {
+                    alert('v-on:keyup.enter');
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
