@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>VueJS</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="vue.js"></script>
+</head>
+<body>
+    <p>multiple <code>Vue</code> instances can be created.</p>
+    <u>
+        <li>by mapping different elements - <code>el</code></li>
+        <li>each instance controls the mapped element</li>
+    </u>
+    <p>Vue instance can be accessed outside</p>
+    <ul>
+        <li>by creating a variable of <code>Vue</code> instance</li>
+    </ul>
+    <p>Vue instance keep tracking its properties (data, methods ...) upon creation</p>
+    <ul>
+        <li>new properties can be created eg) <code>vm1.newProp='New'</code></li>
+        <li>however it is not tracked so not accessible in the original instance</li>
+        <li>although it can be accessed by the environment that the property is created</li>
+        <li>in vm2, vm1.newProp='New', accessible within vm2 but not in vm1 (066)</li>
+    </ul>
+    <p>Vue properties can be accessed</p>
+    <u>
+        <li><code>vm1.$el, vm1.$data, vm1.$ref</code></li>
+        <li>properties (eg data) can be created outside of Vue instance</li>
+        <li>and accessed as long as it is added in initialization</li>
+    </u>
+    <p>Vue instance can be mixed with Javscript code</p>
+    <p><code>$refs</code> - Vue properties can be created from HTML</p>
+    <u>
+        <li>most of stuff so far is JS -> HTML</li>
+        <li>here it is HTML -> JS</li>
+        <li>ref is not Vue native, so not reactive, use only for getting current value</li>
+    </u>
+
+    <div id="app1">
+        <h1 ref="heading">{{ title }}</h1>
+        <button v-on:click="show" ref="myButton">Show Paragraph</button>
+        <p v-if="showParagraph">This is not always visible</p>
+    </div>
+
+    <div id="app2">
+        <h1>{{ title }}</h1>
+        <button v-on:click="onChange">Change something in Vue 1</button>
+    </div>
+
+    <script>
+        var vm1 = new Vue({
+            el: '#app1',
+            data: {
+                title: 'This VueJS Instance',
+                showParagraph: false
+            },
+            methods: {
+                show: function() {
+                    this.showParagraph = true;
+                    this.updateTitle('The VueJS Instance (Updated)');
+                    console.log(this.$refs);
+                    var vm = this;
+                    setTimeout(function() {
+                        vm.$refs.myButton.innerText = 'Test';
+                    }, 2000);
+                    //this.$refs.myButton.innerText = 'Test';                    
+                },
+                updateTitle: function(title) {
+                    console.log('vm1 - updateTitle');
+                    this.title = title;
+                }                
+            },
+            computed: {
+                lowercaseTitle: function() {
+                    return this.title.toLowerCase();
+                }
+            },
+            watch: {
+                title: function(value) {
+                    alert('Title changed to new value: ' + value)
+                }
+            }
+        });
+
+        setTimeout(function() {
+            console.log('Timer');
+            vm1.title = 'Changed by Timer';
+        }, 3000)
+
+        vm1.$refs.heading.innerText = 'Something else!!';
+
+        var data = {
+            title: 'The second instance'
+        }
+
+        var vm2 = new Vue({
+            el: '#app2',
+            data: data,
+            methods: {
+                onChange: function() {
+                    console.log('vm2 - onChange');
+                    vm1.title = 'Changed from vm2';
+                }
+            }
+        })
+        console.log(data == vm2.$data)
+    </script>
+
+</body>
+</html>
