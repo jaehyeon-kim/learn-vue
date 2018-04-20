@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monster Slayer</title>
+    <script src="vue.js"></script>
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="app">
+    <section class="row">
+        <div class="small-6 columns">
+            <h1 class="text-center">YOU</h1>
+            <div class="healthbar">
+                <div class="healthbar text-center" :style="{backgroundColor: 'green', margin: 0, color: 'white', width: players + '%'}">
+                    {{ players }}
+                </div>
+            </div>
+        </div>
+        <div class="small-6 columns">
+            <h1 class="text-center">MONSTER</h1>
+            <div class="healthbar">
+                <!--style can be appended-->
+                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;" :style="{width: monsters + '%'}">
+                    {{ monsters }}
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="row controls" v-show="!gameStarted">
+        <div class="small-12 columns">
+            <button id="start-game" @click="initialize(true)">START NEW GAME</button>
+        </div>
+    </section>
+    <section class="row controls" v-show="gameStarted">
+        <div class="small-12 columns">
+            <button id="attack" @click="control('attack')">ATTACK</button>
+            <button id="special-attack" @click="control('special')">SPECIAL ATTACK</button>
+            <button id="heal" @click="control('heal')">HEAL</button>
+            <button id="give-up" @click="initialize(false)">GIVE UP</button>
+        </div>
+    </section>
+    <section class="row log" v-show="logs.length > 0">
+        <div class="small-12 columns">
+            <ul class="log ul">
+                <li v-for="log in logs" :class="log.who == 'monster' ? 'monster-turn' : 'player-turn'">
+                    {{ log.msg }}
+                </li>
+            </ul>
+        </div>
+    </section>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            players: 100,
+            monsters: 100,
+            gameStarted: false,
+            logs: []
+        },
+        computed: {
+
+        },
+        methods: {
+            confm: function(msg) {
+                if (confirm(msg)) {
+                    this.initialize(true);
+                }
+            },
+            control: function(type) {
+                console.log('control');
+                var playerAttack = Math.floor(Math.random() * 10) + 1;
+                var monsterAttack = Math.floor(Math.random() * 10) + 1;
+                if (type == 'attack') {
+                    this.players = Math.min(this.players - monsterAttack);
+                    this.monsters = Math.min(this.monsters - playerAttack);
+                    this.logs.push({who: 'monster', msg: 'MONSTER HITS PLAYER FOR ' + monsterAttack});
+                    this.logs.push({who: 'player', msg: 'PLAYER HITS MONSTER FOR ' + playerAttack});                   
+                } else if (type == 'special') {
+                    monsterAttack = Math.floor(monsterAttack/2)
+                    this.players = Math.min(this.players - Math.floor(monsterAttack/2));
+                    this.monsters = Math.min(this.monsters - playerAttack);
+                    this.logs.push({who: 'monster', msg: 'MONSTER HITS PLAYER FOR ' + monsterAttack});
+                    this.logs.push({who: 'player', msg: 'PLAYER HITS MONSTER FOR ' + playerAttack}); 
+                } else {
+                    var heal = Math.floor(Math.random() * 10) + 1;
+                    this.players = this.players + heal;
+                    this.players = Math.min(this.players - playerAttack);
+                    this.logs.push({who: 'monster', msg: 'MONSTER HITS PLAYER FOR ' + monsterAttack});
+                    this.logs.push({who: 'player', msg: 'PLAYER HEALS HIMSELF FOR ' + heal}); 
+                }
+
+                if (this.players == 0 && this.monsters == 0) {
+                    this.confm('Draw! New Game?')
+                } else if (this.players <= 0) {
+                    this.confm('You lost! New Game?')
+                } else if (this.monsters <= 0) {
+                    this.confm('You won! New Game?')
+                }
+            },
+            initialize: function(status) {                
+                this.players = 100;
+                this.monsters = 100;
+                this.gameStarted = status;
+                this.logs = [];
+            }
+        }
+    });
+</script>
+</body>
+</html>
