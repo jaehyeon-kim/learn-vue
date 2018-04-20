@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>VueJS</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <p>conditional rendering by completely detaching - <code>v-if / v-else</code></p>
+        <ul><li>nested elements will also be removed</li></ul>
+        <button @click="show = !show">Toggle</button>
+        <p v-if="show">You can see me! <span>Hello!</span></p>
+        <p v-else>Now you see me!</p>
+        <p>Do you also see me?</p>
+        <br>
+        <p>template tag</p>
+        <ul>
+            <li>only child elements of <code>templte</code> will be shown in browser</li>
+            <li>can be handy to wrap multiple elements</li>
+        </ul>
+        <p>all lists will be toggled</p>
+        <template v-if="show">            
+            <ul>
+                <li>template 1 list 1</li>
+                <li>template 2 list 2</li>
+            </ul>
+        </template>
+        <p>only list 2 will be toggled</p>
+        <template>
+            <ul>
+                <li>template 2 list 1</li>
+                <li v-if="show">template 2 list 2</li>
+            </ul>
+        </template>
+        <p>=======================</p>
+        <p>hiding instead of detaching - <code>v-show</code></p>
+        <ul>
+            <li>adding <code>style="display:none;"</code></li>
+        </ul>
+        <p v-show="show">Am I shown?</p>
+        <p>=======================</p>
+        <p>rendering lists - <code>v-for</code></p>
+        <p>output all ingredients with index in <code>li</code></p>
+        <ul>
+            <li v-for="(ingredient, index) in ingredients">{{ ingredient }} ({{ index }})</li>
+        </ul>
+        <p>for non-nested elements, use <code>template</code></p>
+        <p>output ingredients and index if <code>index == 0</code></p>
+        <template v-for="(ingredient, index) in ingredients" v-if="index == 0">
+            <h3>{{ ingredient }}</h3>
+            <h4>{{ index }}</h4>
+        </template>
+        <p>rendering objects - by object.key</p>
+        <ul>
+            <li v-for="person in persons">{{ person.name }}</li>
+        </ul>
+        <p>rendering objects - all values by nested <code>v-for</code></p>
+        <ul><li><code>value in obj, (value, key) in obj, (value, key, ind) in obj</code></li></ul>
+        <ul>
+            <li v-for="person in persons">
+                <div v-for="(value, key, index) in person">{{ key }}: {{ value }} ({{ index }})</div>
+            </li>
+        </ul>
+        <p>rendering numbers - <code>v-for="n in 10"</code></p>
+        <span v-for="n in 10">{{ n }}</span>
+        <p>==========================</p>
+        <button @click="ingredients.pop()">pop</button>
+        <button @click="ingredients.push(newIngredient)">push</button>
+        <input type="text" v-model="newIngredient">
+        <ul>
+            <li v-for="ingredient in ingredients">{{ ingredient }}</li>
+        </ul>
+        <p>add key</p>
+        <u>
+            <li>some of elements may be overwritten</li>
+            <li>add key if actual elements to keep track</li>
+            <li>key should be unique values</li>
+        </u>
+        <ul>
+            <li v-for="ingredient in ingredients" :key="ingredient">{{ingredient}}</li>
+        </ul>
+
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                show: true,
+                ingredients: ['meat', 'fruit', 'cookies'],
+                persons: [
+                    {name: 'Max', age: 27, color: 'red'},
+                    {name: 'Anna', age: 'unknown', color: 'blue'}
+                ],
+                newIngredient: 'vegi'
+            },
+            methods: {
+
+            }
+        });   
+    </script>
+
+</body>
+</html>
