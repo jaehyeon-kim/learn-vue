@@ -24,3 +24,13 @@ JSFiddle:
 Useful Links:
 * Official Docs - Conditionals:http://vuejs.org/guide/conditional.html
 * Official Docs - Lists:http://vuejs.org/guide/list.html
+
+## 05 Understaning VueJS instance
+
+Useful Links:
+* Official Docs - The Vue Instance:http://vuejs.org/guide/instance.html
+* Official Docs - VueJS API: http://vuejs.org/api/
+
+## VueJS lifecycle
+
+![lifecycle](./image/lifecycle.png)

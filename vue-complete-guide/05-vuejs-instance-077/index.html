@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>VueJS</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="vue.js"></script>
+</head>
+<body>
+    <p>Vue instance can be mounted by <code>el property</code> or <code>$mount() method - $ is for Vue internal methods</code></p>
+    <ul>
+        <li><code>el property</code></li>
+        <li><code>$mount() method - var vm = Vue({}); vm$mount('#app');</code></li>
+        <ul>
+            <li><code>var vm = Vue({});</code></li>
+            <li><code>vm$mount('#app');</code> OR</li>
+            <li><code>vm$mount(); document.getElementById('app').appendChild(vm.$el);</code></li>
+        </ul>
+    </ul>
+
+    <p>================================</p>
+    <div id="app">
+        <h1 ref="heading">{{ title }}</h1>
+        <button @click="toggle" ref="myButton">Toggle</button>
+        <p v-if="showParagraph">This is not always visible</p>
+    </div>
+
+    <p>================================</p>
+    <p>HTML can be created by <code>template</code> property, not practical!!</p>
+    <div id='app3'></div>
+
+    <div id='app4'></div>
+
+    <p>================================</p>
+    <p>component</p>
+    <div id='app5'>
+        <ul>
+            <li v-for="i in [0, 1, 2]"><hello></hello></li>
+        </ul>
+    </div>
+
+    <p>================================</p>
+    <p>lifecycle</p>
+    <div id="app6">
+        <h1>{{ title }}</h1>
+        <button @click="title = 'Changed'">Update Title</button>
+        <button @click="destroy">Destroy</button>
+    </div>
+
+    <script>
+        var vm1 = new Vue({
+            //el: '#app',
+            data: {
+                title: 'This VueJS Instance',
+                showParagraph: false
+            },
+            methods: {
+                toggle: function() {
+                    this.showParagraph = !this.showParagraph;
+                    this.updateTitle('The VueJS Instance (Updated)');
+                    console.log(this.$refs);
+                    var vm = this;
+                    setTimeout(function(){
+                        vm.$refs.myButton.innerText = 'Toggle' + (vm.showParagraph ? ' on' : ' off');
+                    }, 100);
+
+                },
+                updateTitle: function(title) {
+                    console.log('updateTitle');
+                    this.title = title;
+                }
+            }
+        });
+
+        vm1.$mount('#app');
+
+        var vm3 = new Vue({
+            template: '<h1>Hello App 3!</h1>'
+        });
+
+        vm3.$mount('#app3');
+
+        var vm4 = new Vue({
+            template: '<h1>Hello App 4!</h1>'
+        });
+
+        vm4.$mount();
+        document.getElementById('app4').appendChild(vm4.$el);
+
+        // component        
+        Vue.component('hello', {
+            template: '<p>Hello Component!!</p>'
+        });
+
+        new Vue({
+            el: '#app5'
+        });
+
+        // lifecycle
+        new Vue({
+            el: '#app6',
+            data: {
+                title: 'The VueJS Instance'
+            },
+            beforeCreate: function() {
+                console.log('beforeCreate()');
+            },
+            created: function() {
+                console.log('created()');
+            },
+            beforeMount: function() {
+                console.log('beforeMount()');
+            },
+            mounted: function() {
+                console.log('mounted()');
+            },
+            beforeUpdate: function() {
+                console.log('beforeUpdate()');
+            },
+            updated: function() {
+                console.log('updated()');
+            },
+            beforeDestroy: function() {
+                console.log('beforeDestroy()');
+            },
+            destroyed: function() {
+                console.log('destroyed()');
+            },
+            methods: {
+                destroy: function() {
+                    this.$destroy();
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
