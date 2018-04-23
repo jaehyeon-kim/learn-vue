@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>VueJS</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="vue.js"></script>
+</head>
+<body>
+
+    <h3>Storing data in a component as a function!</h3>
+    <ul>
+        <li>In component, data should be a function, not an object inside a component</li>
+        <li>Or data can be created outside a component and referenced</li>
+        <li>Assume that 2 components use same data <code>{status: 'Critical'}</code></li>
+        <li>if by a function, data is referenced by different objects in memory - components' status is independent</li>
+        <li>if by a same object, components' status is dependent</li>
+    </ul>
+    <div id="app1">
+        <p>App 1 - register component globally by <code>Vue.component()</code></p>
+        <ul>
+            <li v-for="i in [0, 1]">
+                <my-cmp></my-cmp>
+            </li>
+        </ul>
+    </div>
+
+    <div id="app2">
+        <p>App 2 - register component locally by <code>components</code> property</p>
+        <ul>
+            <li v-for="i in [0, 1]">
+                <my-cmp></my-cmp>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        var data = { status: 'Critical' };
+
+        // registered globally
+        Vue.component('my-cmp', {
+            data: function() {
+                //return data;
+                return {
+                    status: 'Critical'
+                };
+            },
+            template: '<p>Server Status: {{ status }} (<button @click="changeStatus">Change</button>)</p>',
+            methods: {
+                changeStatus: function() {
+                    this.status = 'Normal';
+                }
+            }       
+        });
+
+        new Vue({
+            el: '#app1'
+        });
+
+        // registered locally
+        var cmp = {
+            data: function() {
+                return {
+                    status: 'Critical'
+                };
+            },
+            template: '<p>Server Status: {{ status }} (<button @click="changeStatus">Change</button>)</p>',
+            methods: {
+                changeStatus: function() {
+                    this.status = 'Normal';
+                }
+            }       
+        };
+
+        new Vue({
+            el: '#app2',
+            components: {
+                'my-cmp': cmp
+            }
+        });
+    </script>
+
+</body>
+</html>

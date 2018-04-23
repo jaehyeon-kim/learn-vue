@@ -34,3 +34,8 @@ Useful Links:
 ## VueJS lifecycle
 
 ![lifecycle](./image/lifecycle.png)
+
+## 07 Introduction to components
+
+Useful Links:
+* Official Docs - Components:http://vuejs.org/guide/components.html
