@@ -39,3 +39,10 @@ Useful Links:
 
 Useful Links:
 * Official Docs - Components:http://vuejs.org/guide/components.html
+
+## 08 Communicating components
+
+Useful Links:
+* Official Docs - Props:http://vuejs.org/guide/components.html#Props
+* Official Docs - Custom Events:http://vuejs.org/guide/components.html#Custom-Events
+* Official Docs - Non-Parent-Child Communication:http://vuejs.org/guide/components.html#Non-Parent-Child-Communication
