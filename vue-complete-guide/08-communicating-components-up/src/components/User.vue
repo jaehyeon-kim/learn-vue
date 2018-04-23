@@ -15,10 +15,22 @@
             <div class="col-xs-12 col-sm-6">
                 <app-user-detail
                     :userName="name"
+                    :userAge="age"
+                    :userGender="gender"
+                    :userCountry="country"
+                    :userHome="home"
                     ></app-user-detail>
             </div>
             <div class="col-xs-12 col-sm-6">
-                <app-user-edit></app-user-edit>
+                <app-user-edit
+                    :userName="name"
+                    @nameWasReset="name = $event"
+                    :resetFn="resetName"
+                    :userAge="age"
+                    :userGender="gender"
+                    :userCountry="country"
+                    :userHome="home"
+                    ></app-user-edit>
             </div>
         </div>
     </div>
@@ -34,12 +46,18 @@
         data: function() {
             return {
                 name: 'Bernie',
-                age: '30'
+                age: '30',
+                gender: 'Male',
+                country: 'aus',
+                home: 'kor'
             }
         },
         methods: {
             changeName() {
                 this.name = 'Jaehyeon'
+            },
+            resetName() {
+                this.name = 'Jaehyeon Kim'
             }
         },
         components: {
@@ -47,7 +65,9 @@
             appUserEdit: UserEdit
         },
         created() {
-            
+            eventBus.$on('ageWasEdited', (data) => {
+                this.age = data;
+            });
         }
     }
 </script>
