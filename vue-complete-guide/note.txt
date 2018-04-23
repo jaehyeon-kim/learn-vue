@@ -1,3 +1,21 @@
+
+https://github.com/vuejs/vue-cli/tree/master
+
+Official templates
+* webpack
+* webpack-simple
+* browserify
+* browserify-simple
+* pwa
+* simple
+
+vue init <template-name> <project-name>
+cd project-name
+npm install
+npm run dev
+
+============================================
+
 https://www.npmjs.com/package/http-server
 
 npm install http-server -g
