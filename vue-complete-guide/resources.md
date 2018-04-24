@@ -46,3 +46,10 @@ Useful Links:
 * Official Docs - Props:http://vuejs.org/guide/components.html#Props
 * Official Docs - Custom Events:http://vuejs.org/guide/components.html#Custom-Events
 * Official Docs - Non-Parent-Child Communication:http://vuejs.org/guide/components.html#Non-Parent-Child-Communication
+
+## 09 Advanced component features
+
+Helpful Links:
+* Official Docs -Slots:http://vuejs.org/guide/components.html#Content-Distribution-with-Slots
+* Official Docs -Dynamic Components:http://vuejs.org/guide/components.html#Dynamic-Components
+* Official Docs - Misc:http://vuejs.org/guide/components.html#Misc
