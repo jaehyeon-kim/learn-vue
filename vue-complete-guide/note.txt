@@ -57,3 +57,34 @@ http-server [path] [options]
 -r or --robots Provide a /robots.txt (whose content defaults to 'User-agent: *\nDisallow: /')
 
 -h or --help Print this list and exit.
+
+====================
+
+Shiny with htmlwidgets is a great combination for web development.
+
+- Shiny manages application state effectively so that it is hardly expected that frontend and backend keep mismatching values - most of such work is done by `reactive*()` and `observe*()`.
+- htmlwidgets help create interactive html elements in R
+
+While htmlwidgets can be rendered without a problem by HTTP requests, the remaining issue is `how to manage application state effectively`.
+
+Although JQuery is popular for such tasks, it has 2 limitations.
+
+1. manipulating actual DOM is slow
+2. harder to manage application state (eg `callback hell`)
+
+I'm not against using JQuery (and we are likely to use it) but the point is JQuery may not be the right tool for application state management.
+
+JS frameworks would be used to handle such an issue and the following frameworks are popular.
+
+- angular: MVC (model-view-controller), version imcompatible (v2 is quite different from v4), may not be suitable
+- react: V only, popular and rich ecosystem, need good understanding to implement state management/routing/higher order components 
+- vue: V only, getting more popular and competitive ecosystem, easier than react to learn and simpler to get jobs done
+
+At the moment, I'm looking into `vue`.
+
+In relation to admin template or UI components, it may not be a good idea to use something that relies on Bootstrap because most of those also relies on its own version of JQuery in one way of another - if their JQuery is different from ours, there'll be `version conflict`.
+
+There are some UI frameworks that don't rely on Bootstrap/JQuery such as Material UI are Semantic UI and the former has several active projects and may be of good fit.
+
+- https://vuematerial.io/
+- https://vuetifyjs.com/en/
