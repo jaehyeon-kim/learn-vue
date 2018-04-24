@@ -53,3 +53,8 @@ Helpful Links:
 * Official Docs -Slots:http://vuejs.org/guide/components.html#Content-Distribution-with-Slots
 * Official Docs -Dynamic Components:http://vuejs.org/guide/components.html#Dynamic-Components
 * Official Docs - Misc:http://vuejs.org/guide/components.html#Misc
+
+## 10 Form control
+
+Useful Links:
+* Official Docs - Forms:http://vuejs.org/guide/forms.html
