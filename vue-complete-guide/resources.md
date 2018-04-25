@@ -61,9 +61,13 @@ Useful Links:
 
 ## 12 Directives
 
-## VueJS lifecycle
-
 ![hooks](./image/directive-hooks.png)
 
 Useful Links:
 * Official Docs - CustomDirectives:http://vuejs.org/guide/custom-directive.html
+
+## 13 Filters and Mixins
+
+Useful Links:
+* Official Docs - Filters:https://vuejs.org/v2/guide/filters.html
+* Official Docs -Mixins:http://vuejs.org/guide/mixins.html
