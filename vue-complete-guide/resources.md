@@ -71,3 +71,15 @@ Useful Links:
 Useful Links:
 * Official Docs - Filters:https://vuejs.org/v2/guide/filters.html
 * Official Docs -Mixins:http://vuejs.org/guide/mixins.html
+
+## 16 Routing
+
+As of vue-router version 2.2, you can also bind your route params to props of the target components. This eliminates the need of watching $route.
+
+There are three ways of using this feature, check this official example to learn more:https://github.com/vuejs/vue-router/tree/dev/examples/route-props
+
+You can basically either pass a static value, bind a dynamic value to props or use a function to also convert your dynamic value.
+
+Useful Links:
+* vue-router Github Page:https://github.com/vuejs/vue-router
+* vue-router Documentation:https://router.vuejs.org/en/
