@@ -1,0 +1,11 @@
+FROM rocker/tidyverse:3.4
+
+RUN apt-get update \
+    && apt-get install -y libssl-dev wget curl nano procps
+
+RUN wget https://www.rforge.net/src/contrib/Rserve_1.8-5.tar.gz \
+    && /usr/local/bin/R CMD INSTALL Rserve_1.8-5.tar.gz
+
+RUN R -e 'install.packages(c("htmlwidgets", "plotly", "DT", "leaflet", "rmarkdown", "shiny", "shinydashboard"))'
+
+EXPOSE 8000

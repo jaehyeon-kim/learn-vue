@@ -1,0 +1,8 @@
+FROM node:8-stretch
+
+RUN apt-get update \
+    && apt-get install -y wget curl nano procps
+
+RUN npm install -g yarn vue-cli
+
+EXPOSE 8080

@@ -88,3 +88,7 @@ There are some UI frameworks that don't rely on Bootstrap/JQuery such as Materia
 
 - https://vuematerial.io/
 - https://vuetifyjs.com/en/
+
+
+https://github.com/Microsoft/monaco-editor
+https://github.com/egoist/vue-monaco

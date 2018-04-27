@@ -1,0 +1,23 @@
+version: '2'
+services:
+  api:
+    build:
+        context: .
+        dockerfile: Dockerfile-api-noproxy
+    command: /usr/local/bin/R CMD Rserve --slave --RS-conf /home/rstudio/api/rserve.conf --RS-source /home/rstudio/api/rserve-src.R
+    volumes:
+        - ./api:/home/rstudio/api
+    privileged: true
+    ports:
+        - "8000:8000"
+  ui:
+    build:
+        context: .
+        dockerfile: Dockerfile-ui-noproxy
+    command: cd /home/rstudio/ui && npm install && npm run --prefix /home/rstudio/ui dev
+    volumes:
+        - "./ui:/home/rstudio/ui"
+        - "/home/rstudio/node_modules/"
+    privileged: true
+    ports:
+        - "8080:8080"
