@@ -83,3 +83,12 @@ You can basically either pass a static value, bind a dynamic value to props or u
 Useful Links:
 * vue-router Github Page:https://github.com/vuejs/vue-router
 * vue-router Documentation:https://router.vuejs.org/en/
+
+## 17 Vuex
+
+![vuex](./image/vuex.png)
+
+Useful Links:
+* https://vuex.vuejs.org/en/modules.html
+* Vuex Github Page:https://github.com/vuejs/vuex
+* Vuex Documenation:https://vuex.vuejs.org/en/
