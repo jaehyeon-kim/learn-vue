@@ -92,3 +92,10 @@ Useful Links:
 * https://vuex.vuejs.org/en/modules.html
 * Vuex Github Page:https://github.com/vuejs/vuex
 * Vuex Documenation:https://vuex.vuejs.org/en/
+
+## Extra
+
+![auth](./image/auth.png)
+
+The "token"we're storing is not just a string. It's basically an encoded JavaScript object and therefore also called "JSONWeb Token".
+* Learn more about the token and its payload here:https://jwt.io/
